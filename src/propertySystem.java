@@ -7,13 +7,38 @@
  *
  * @author User
  */
-public class propertySystem {
+import java.util.Scanner;
 
-    /**
-     * @param args the command line arguments
-     */
+public class propertySystem {
     public static void main(String[] args) {
-        // TODO code application logic here
+        Scanner input = new Scanner(System.in);
+        boolean running = true;
+        System.out.println("--------------------------------------------");
+        System.out.println(" WELCOME TO THE PROPERTY MANAGEMENT SYSTEM  ");
+        System.out.println("--------------------------------------------");
+
+        while(running) {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. Add New Property");
+            System.out.println("2. View Available Properties");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = input.nextInt();
+
+            switch(choice) {
+                case 1:
+                    // addProperty();
+                    break;
+                case 2:
+                    System.out.println("[System] View Available Properties:")
+                    // viewProperties();
+                    break;
+                case 3:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
-    
 }
