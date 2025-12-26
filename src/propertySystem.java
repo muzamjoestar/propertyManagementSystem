@@ -30,7 +30,7 @@ public class propertySystem {
                     // addProperty();
                     break;
                 case 2:
-                    System.out.println("[System] View Available Properties:")
+                    System.out.println("[System] View Available Properties:");
                     // viewProperties();
                     break;
                 case 3:
