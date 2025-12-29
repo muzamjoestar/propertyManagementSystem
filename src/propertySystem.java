@@ -9,6 +9,8 @@
  */
 import java.util.Scanner;
 
+import java.util.Scanner;
+
 public class propertySystem {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -28,9 +30,10 @@ public class propertySystem {
             switch(choice) {
                 case 1:
                     // addProperty();
+                    System.out.println("[System] Loading...");
                     break;
                 case 2:
-                    System.out.println("[System] View Available Properties:");
+                    System.out.println("[System] Viewing Available Properties...");
                     // viewProperties();
                     break;
                 case 3:
