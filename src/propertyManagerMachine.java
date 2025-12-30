@@ -7,7 +7,7 @@
  *
  * @author User
  */
-public class propertyManager {
+public class propertyManagerMachine {
         public class propertyList {
         private int[] property = new int[100]; 
         private int count = 0;
