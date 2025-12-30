@@ -40,6 +40,7 @@ public class propertySystem {
                     running = false;
                     break;
                 default:
+                    // babi
                     System.out.println("Invalid choice. Please try again.");
             }
         }
