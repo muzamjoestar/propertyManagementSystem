@@ -8,38 +8,88 @@ package codinghadif;
  *
  * @author user
  */
-public void displayFloorPlan(String propertyType) { // This 'type' comes from Aqil's class
+public void displayPlan(String propertyType) {
+    // Hadif's Task B: Topic 8 - Multidimensional Arrays
     char[][] grid;
 
-    // Logic: Decide which drawing to use based on Aqil's data
-    if (propertyType.equalsIgnoreCase("Bungalow")) {
-        grid = new char[][]{
-            {'-', '-', '-', '-', '-', '-', '-'},
-            {'|', ' ', 'B', ' ', '|', ' ', 'B', '|'}, // Larger layout for Bungalow
-            {'|', '-', '-', ' ', '-', '-', '|'},
-            {'|', ' ', ' ', 'L', ' ', ' ', '|'},
-            {'-', '-', '-', '-', '-', '-', '-'}
-        };
-    } else if (propertyType.equalsIgnoreCase("Apartment")) {
-        grid = new char[][]{
-            {'-', '-', '-', '-', '-'},
-            {'|', 'B', '|', 'K', '|'}, // Compact layout for Apartment
-            {'-', '-', '-', '-', '-'}
-        };
-    } else {
-        // A simple generic box if the type is unknown
-        grid = new char[][]{
-            {'-', '-', '-'},
-            {'|', ' ', '|'},
-            {'-', '-', '-'}
-        };
+    // Logic: Select the grid based on the "type" provided by Aqil
+    switch (propertyType.toLowerCase()) {
+        case "bungalow":
+            grid = new char[][]{
+                {'-','-','-','-','-','-','-','-','-','-','-'},
+                {'|',' ','B',' ','|',' ','G','a','r','d','|'}, // B=Bedroom
+                {'|','-','-','-',' ','-','-','-','-','-','|'},
+                {'|',' ',' ','L','i','v','i','n','g',' ','|'}, // Large Living
+                {'-','-','-','-','-','-','-','-','-','-','-'}
+            };
+            break;
+            
+        case "terrace house":
+            grid = new char[][]{
+                {'-','-','-','-','-','-','-'},
+                {'|',' ','B',' ','|',' ','|'},
+                {'|','-','-',' ','-','-','|'},
+                {'|',' ','K','i','t',' ','|'}, // Long narrow layout
+                {'-','-','-','-','-','-','-'}
+            };
+            break;
+            
+        case "apartment":
+            grid = new char[][]{
+                {'-','-','-','-','-','-','-'},
+                {'|',' ','B',' ','|',' ','|'},
+                {'|',' ','-','-','-',' ','|'},
+                {'|',' ','L',' ','K',' ','|'}, // Standard Apartment
+                {'-','-','-','-','-','-','-'}
+            };
+            break;
+            
+        case "condominium":
+            grid = new char[][]{
+                {'-','-','-','-','-','-','-','-','-'},
+                {'|',' ','B',' ','|',' ','B','a','l','|'}, // Balcony included
+                {'|','-','-','-',' ','-','-','-','|'},
+                {'|',' ',' ','L','i','v',' ',' ','|'},
+                {'-','-','-','-','-','-','-','-','-'}
+            };
+            break;
+            
+        case "studio":
+            grid = new char[][]{
+                {'-','-','-','-','-'},
+                {'|',' ',' ',' ','|'},
+                {'|',' ','S',' ','|'}, // S = Studio/Single space
+                {'|',' ',' ',' ','|'},
+                {'-','-','-','-','-'}
+            };
+            break;
+            
+        case "cluster house":
+            grid = new char[][]{
+                {'-','-','-','|','-','-','-'},
+                {'|',' ','B','|','B',' ','|'}, // Shared wall style
+                {'|','-','-','|','-','-','|'},
+                {'|',' ','L','|','L',' ','|'},
+                {'-','-','-','|','-','-','-'}
+            };
+            break;
+            
+        default:
+            // Fallback for any other type
+            grid = new char[][]{
+                {'-','-','-'},
+                {'|','?','|'},
+                {'-','-','-'}
+            };
+            break;
     }
 
-    // Your Nested Loop (Task B) to print whatever grid was chosen
-    for (int i = 0; i < grid.length; i++) {       // Outer loop for rows
-        for (int j = 0; j < grid[i].length; j++) { // Inner loop for columns
-            System.out.print(grid[i][j]);          // Print characters side-by-side
+    // Task B Logic: The Nested Loop to display the grid
+    System.out.println("\n--- Floor Plan for " + propertyType + " ---");
+    for (int i = 0; i < grid.length; i++) {       // Outer loop for Rows
+        for (int j = 0; j < grid[i].length; j++) { // Inner loop for Columns
+            System.out.print(grid[i][j]);          // Print without newline
         }
-        System.out.println();                      // Move to next line after each row
+        System.out.println();                      // Newline after each row
     }
 }
