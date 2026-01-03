@@ -33,4 +33,10 @@ public class Property {
         System.out.println("Status: " + status);
         System.out.println("---------------------------");
     }
+    public String getID() { return propertyID; }
+    public String getType() { return type; }
+    public String getLocation() { return location; }
+    public double getPrice() { return price; }
+    public String getStatus() { return status; }
 }
+

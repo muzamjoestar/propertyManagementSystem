@@ -5,42 +5,59 @@
 // File: PropertyManager.java
 // Make sure this matches your package name (e.g., package propertymanagementsystem;)
 
-public class PropertyManagerMachine {
-    // 1. Storage: We store 'Property' objects, not 'int'
-    // NOTE: This will show an ERROR until you create the Property.java file below.
+
+public class propertyManagerMachine {
+    
+    // --- PROPERTY STORAGE ---
     private Property[] properties = new Property[100]; 
-    private int count = 0;
+    private int propertyCount = 0;
 
-    // 2. Add Method
+    // --- TENANT STORAGE (NEW) ---
+    private Tenant[] tenants = new Tenant[100]; // <--- NEW ARRAY
+    private int tenantCount = 0;                // <--- NEW COUNTER
+
+    // --- METHODS ---
+
     public void addProperty(Property p) {
-        if (count < properties.length) {
-            properties[count] = p; // Store the object
-            count++; // Increment counter
-            System.out.println("[System] Property added successfully.");
+        if (propertyCount < properties.length) {
+            properties[propertyCount] = p;
+            propertyCount++;
+            System.out.println("[Success] Property Added.");
         } else {
-            System.out.println("[Error] Storage is full.");
+            System.out.println("[Error] Property List Full.");
         }
     }
 
-    // 3. Display Method
-    public void viewProperties() {
-        if (count == 0) {
+    // NEW: Method to Add Tenant
+    public void addTenant(Tenant t) {
+        if (tenantCount < tenants.length) {
+            tenants[tenantCount] = t;
+            tenantCount++;
+            System.out.println("[Success] Tenant Added.");
+        } else {
+            System.out.println("[Error] Tenant List Full.");
+        }
+    }
+
+    public void displayAll() {
+        // 1. Display Properties
+        System.out.println("\n--- LIST OF PROPERTIES ---");
+        if (propertyCount == 0) {
             System.out.println("No properties found.");
-            return;
+        } else {
+            for (int i = 0; i < propertyCount; i++) {
+                properties[i].printDetails();
+            }
         }
-        System.out.println("\n--- Property List ---");
-        for (int i = 0; i < count; i++) {
-            // We call the print method inside the Property object
-            properties[i].printDetails(); 
+        
+        // 2. Display Tenants
+        System.out.println("\n--- LIST OF TENANTS ---");
+        if (tenantCount == 0) {
+            System.out.println("No tenants found.");
+        } else {
+            for(int i = 0; i < tenantCount; i++) {
+                tenants[i].printDetails();
+            }
         }
-    }
-    
-    // 4. Helper for Hadif
-    public Property[] getAllProperties() {
-        return properties;
-    }
-    
-    public int getCount() {
-        return count;
     }
 }
