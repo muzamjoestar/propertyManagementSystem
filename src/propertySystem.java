@@ -18,6 +18,9 @@ public class propertySystem {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         boolean running = true;
+        
+        System.out.println("[System] Checking for saved data...");
+        manager.loadData();
 
         System.out.println("--------------------------------------------");
         System.out.println(" WELCOME TO THE PROPERTY MANAGEMENT SYSTEM  ");
@@ -66,6 +69,8 @@ public class propertySystem {
                         break;
                         
                     case 3:
+                        System.out.println("Saving data...");
+                        manager.saveData();
                         System.out.println("Exiting System. Goodbye!");
                         running = false;
                         break;

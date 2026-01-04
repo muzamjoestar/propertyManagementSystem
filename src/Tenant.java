@@ -46,10 +46,13 @@ public class Tenant {
         System.out.println("Contact Number: " + contactNumber);
         System.out.println("Email: " + email);
         System.out.println("Occupation: " + occupation);
-        System.out.println("Contact Number: " + contactNumber);
         System.out.println("Monthly Income: " + monthlyIncome);
         System.out.println("Marital Status: " + maritalStatus);
         System.out.println("Nationality: " + nationality);
         System.out.println("---------------------------");
+    }
+    
+    public String toFileString() {
+        return tenantID + ";" + name + ";" + contactNumber + ";" + email + ";" + nationality;
     }
 }

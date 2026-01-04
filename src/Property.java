@@ -38,5 +38,8 @@ public class Property {
     public String getLocation() { return location; }
     public double getPrice() { return price; }
     public String getStatus() { return status; }
+    public String toFileString() {
+        return propertyID + ";" + type + ";" + location + ";" + price + ";" + status;
+    }
 }
 
