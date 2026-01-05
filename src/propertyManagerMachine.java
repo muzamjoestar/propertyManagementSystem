@@ -7,19 +7,20 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class propertyManagerMachine {
-    
-    // --- PROPERTY STORAGE ---
-    private Property[] properties = new Property[100]; 
-    private int propertyCount = 0;
+public class propertyManagerMachine { 
 
-    // --- TENANT STORAGE (NEW) ---
-    private Tenant[] tenants = new Tenant[100]; // <--- NEW ARRAY
-    private int tenantCount = 0;                // <--- NEW COUNTER
+    // 1. DATA (Static = Shared by the whole program)
+    // We removed 'private' so you can see them easily if needed, 
+    // but kept 'static' so they survive without creating an object.
+    static Property[] properties = new Property[100]; 
+    static int propertyCount = 0;
 
-    // --- METHODS ---
+    static Tenant[] tenants = new Tenant[100]; 
+    static int tenantCount = 0;
 
-    public void addProperty(Property p) {
+    // 2. METHODS (Static = Use directly without 'new')
+
+    public static void addProperty(Property p) {
         if (propertyCount < properties.length) {
             properties[propertyCount] = p;
             propertyCount++;
@@ -29,8 +30,7 @@ public class propertyManagerMachine {
         }
     }
 
-    // NEW: Method to Add Tenant
-    public void addTenant(Tenant t) {
+    public static void addTenant(Tenant t) {
         if (tenantCount < tenants.length) {
             tenants[tenantCount] = t;
             tenantCount++;
@@ -40,28 +40,32 @@ public class propertyManagerMachine {
         }
     }
 
-    public void displayAll() {
-        // 1. Display Properties
+    public static void displayAll() {
         System.out.println("\n--- LIST OF PROPERTIES ---");
         if (propertyCount == 0) {
             System.out.println("No properties found.");
         } else {
             for (int i = 0; i < propertyCount; i++) {
+                // We use (i+1) just to show a nice number like "1. Condo..."
+                System.out.print((i+1) + ". ");
                 properties[i].printDetails();
             }
         }
         
-        // 2. Display Tenants
         System.out.println("\n--- LIST OF TENANTS ---");
         if (tenantCount == 0) {
             System.out.println("No tenants found.");
         } else {
             for(int i = 0; i < tenantCount; i++) {
+                System.out.print((i+1) + ". ");
                 tenants[i].printDetails();
             }
         }
     }
-    public void saveData() {
+
+    // --- SIMPLE FILE SAVING ---
+
+    public static void saveData() {
         try {
             // Save Properties
             FileWriter propertyWriter = new FileWriter("properties.txt");
@@ -76,72 +80,50 @@ public class propertyManagerMachine {
                 tenantWriter.write(tenants[i].toFileString() + "\n");
             }
             tenantWriter.close();
-            
-            System.out.println("[System] Data saved successfully.");
-            
+            System.out.println("[System] Data saved.");
         } catch (IOException e) {
-            System.out.println("[Error] Could not save data: " + e.getMessage());
+            System.out.println("Error saving: " + e.getMessage());
         }
     }
     
-    public void loadData() {
+    public static void loadData() {
         try {
-            File pFile = new File("properties.txt");
-            if (pFile.exists()) {
-                Scanner fileScan = new Scanner(pFile);
-                while (fileScan.hasNextLine()) {
-                    String line = fileScan.nextLine();
-                    String[] data = line.split(";"); // Split by semicolon
+            // Load Properties
+            File propertyFile = new File("properties.txt");
+            if (propertyFile.exists()) {
+                Scanner propertyScan = new Scanner(propertyFile);
+                while (propertyScan.hasNextLine()) {
+                    String line = propertyScan.nextLine();
+                    String[] data = line.split(";");
                     
-                    // Reconstruct the object
-                    // Format: id;type;location;price;status
-                    if(data.length >= 4) {
-                        String id = data[0];
-                        String type = data[1];
-                        String loc = data[2];
-                        double price = Double.parseDouble(data[3]);
-                        String status = data[4];
-                        
-                        // Add to array manually to avoid "Success" messages
-                        Property p = new Property(id, type, loc, price, status);
+                    if(data.length >= 5) { 
+                        Property p = new Property(data[0], data[1], data[2], Double.parseDouble(data[3]), data[4]);
                         properties[propertyCount] = p;
                         propertyCount++;
                     }
                 }
-                fileScan.close();
-                System.out.println("[System] Property data loaded.");
+                propertyScan.close();
             }
             
-            // Repeat for Tenants (Simplified for now)
-            File tFile = new File("tenants.txt");
-            if (tFile.exists()) {
-                // ... Logic is same as above, just with Tenant objects...
-                Scanner fileScan = new Scanner(tFile);
-                while (fileScan.hasNextLine()) {
-                    String line = fileScan.nextLine();
-                    String[] data = line.split(";"); // Split by semicolon
+            // Load Tenants
+            File tenantFile = new File("tenants.txt");
+            if (tenantFile.exists()) {
+                Scanner tScan = new Scanner(tenantFile);
+                while (tScan.hasNextLine()) {
+                    String line = tScan.nextLine();
+                    String[] data = line.split(";");
                     
-                    // Reconstruct the object
-                    // Format: id;type;location;price;status
-                    if(data.length >= 4) {
-                        String id = data[0];
-                        String type = data[1];
-                        String loc = data[2];
-                        double price = Double.parseDouble(data[3]);
-                        String status = data[4];
-                        
-                        // Add to array manually to avoid "Success" messages
-                        Property p = new Property(id, type, loc, price, status);
-                        properties[propertyCount] = p;
-                        propertyCount++;
+                    if(data.length >= 10) {
+                        Tenant t = new Tenant(data[0], data[1], data[2], Integer.parseInt(data[3]), data[4], 
+                                    data[5], data[6], Double.parseDouble(data[7]), data[8], data[9]);
+                        tenants[tenantCount] = t;
+                        tenantCount++;
                     }
                 }
-                fileScan.close();
-                System.out.println("[System] Tenant data loaded.");
+                tScan.close();
             }
-            
         } catch (Exception e) {
-            System.out.println("[Error] Could not load data: " + e.getMessage());
+            System.out.println("Error loading: " + e.getMessage());
         }
     }
 }

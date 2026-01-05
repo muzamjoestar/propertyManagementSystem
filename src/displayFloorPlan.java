@@ -8,7 +8,7 @@ package codinghadif;
  *
  * @author user
  */
-public void displayFloorPlan(String propertyType) { // This 'type' comes from Aqil's class
+public static void displayFloorPlan(String propertyType) { // This 'type' comes from Aqil's class
     char[][] grid;
 
     // Logic: Decide which drawing to use based on Aqil's data

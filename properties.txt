@@ -1,1 +1,1 @@
-P001;Condo;Gombal;300.0;Available
+P001;Apartment;Gombak;1200.0;Available

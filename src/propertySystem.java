@@ -12,15 +12,14 @@ import java.util.Scanner;
 public class propertySystem {
     
     // 1. Create the Manager Engine (Must be outside main to survive)
-    // MAKE SURE 'PropertyManager' matches your actual file name (e.g. PropertyManagerMachine?)
-    static propertyManagerMachine manager = new propertyManagerMachine(); 
+    // MAKE SURE 'PropertyManager' matches your actual file name (e.g. PropertyManagerMachine?) 
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         boolean running = true;
         
         System.out.println("[System] Checking for saved data...");
-        manager.loadData();
+        propertyManagerMachine.loadData();
 
         System.out.println("--------------------------------------------");
         System.out.println(" WELCOME TO THE PROPERTY MANAGEMENT SYSTEM  ");
@@ -60,17 +59,17 @@ public class propertySystem {
                         Property newProp = new Property(id, type, loc, price, "Available");
                         
                         // Step C: Send it to the Manager
-                        manager.addProperty(newProp);
+                        propertyManagerMachine.addProperty(newProp);
                         break;
                         
                     case 2:
                         // Step D: Call the view method
-                        manager.displayAll();
+                        propertyManagerMachine.displayAll();
                         break;
                         
                     case 3:
                         System.out.println("Saving data...");
-                        manager.saveData();
+                        propertyManagerMachine.saveData();
                         System.out.println("Exiting System. Goodbye!");
                         running = false;
                         break;
