@@ -2,44 +2,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package codinghadif;
-
+import java.io.*;
+        
 /**
  *
  * @author user
  */
-public static void displayFloorPlan(String propertyType) { // This 'type' comes from Aqil's class
-    char[][] grid;
+public class displayFloorPlan {
 
-    // Logic: Decide which drawing to use based on Aqil's data
-    if (propertyType.equalsIgnoreCase("Bungalow")) {
-        grid = new char[][]{
-            {'-', '-', '-', '-', '-', '-', '-'},
-            {'|', ' ', 'B', ' ', '|', ' ', 'B', '|'}, // Larger layout for Bungalow
-            {'|', '-', '-', ' ', '-', '-', '|'},
-            {'|', ' ', ' ', 'L', ' ', ' ', '|'},
-            {'-', '-', '-', '-', '-', '-', '-'}
-        };
-    } else if (propertyType.equalsIgnoreCase("Apartment")) {
-        grid = new char[][]{
-            {'-', '-', '-', '-', '-'},
-            {'|', 'B', '|', 'K', '|'}, // Compact layout for Apartment
-            {'-', '-', '-', '-', '-'}
-        };
-    } else {
-        // A simple generic box if the type is unknown
-        grid = new char[][]{
-            {'-', '-', '-'},
-            {'|', ' ', '|'},
-            {'-', '-', '-'}
-        };
-    }
+public class FloorPlanReader {
 
-    // Your Nested Loop (Task B) to print whatever grid was chosen
-    for (int i = 0; i < grid.length; i++) {       // Outer loop for rows
-        for (int j = 0; j < grid[i].length; j++) { // Inner loop for columns
-            System.out.print(grid[i][j]);          // Print characters side-by-side
+    private static final String FILE_NAME = "floorplan.txt";
+
+   
+    public static void displayFloorPlan(String type) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            boolean print = false;
+
+            while ((line = br.readLine()) != null) {
+
+                // Start printing when find type
+                if (line.equalsIgnoreCase("[" + type + "]")) {
+                    print = true;
+                    continue;
+                }
+
+                
+                if (print) {
+                    if (line.startsWith("[")) break;
+                    System.out.println(line);
+                }
+            }
+
+            if (!print) {
+                System.out.println("Floor plan for \"" + type + "\" not found.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading floorplans.txt");
         }
-        System.out.println();                      // Move to next line after each row
     }
+}
+
 }
