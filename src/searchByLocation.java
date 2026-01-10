@@ -8,21 +8,24 @@
  * @author user
  */
 public class searchByLocation {
-    
     private Property[] storage;
     private int count;
-    
-  
-    
-public void searchByLocation(String keyword) {
+
+    public searchByLocation(Property[] properties) {
+        this.storage = properties;
+        this.count = properties.length;
+    }
+
+    public void searchAndShowFloorPlan(String keyword) {
         boolean found = false;
         System.out.println("\n--- Searching for Location: " + keyword + " ---");
 
-        for (int i = 0; i < count; i++) { 
-            
-            if (storage[i].getlocation().equalsIgnoreCase(keyword)) { 
-                storage[i].printDetails(); 
-                
+        displayFloorPlan floorPlan = new displayFloorPlan();
+
+        for (int i = 0; i < count; i++) {
+            if (storage[i].getLocation().equalsIgnoreCase(keyword)) {
+                storage[i].printDetails(); // show property info
+                floorPlan.showFloorPlan(storage[i].getType()); // show floor plan for property type
                 found = true;
             }
         }

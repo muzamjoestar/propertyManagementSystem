@@ -9,7 +9,7 @@ import java.io.*;
  * @author user
  */
 public class displayFloorPlan {
-public void displayFloorPlan(String propertyType) {
+public void showFloorPlan(String propertyType) {
 
         propertyType = propertyType.trim();
 
