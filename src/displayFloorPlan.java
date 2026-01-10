@@ -2,17 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package codinghadif;
-
+import java.io.*
+        
 /**
  *
  * @author user
  */
-public static void displayFloorPlan(String propertyType) { // This 'type' comes from Aqil's class
+public class displayFloorPlan {
+public static void displayFloorPlan(String property) { // This 'type' comes from Aqil's class
     char[][] grid;
 
     // Logic: Decide which drawing to use based on Aqil's data
-    if (propertyType.equalsIgnoreCase("Bungalow")) {
+    if (property.equalsIgnoreCase("Bungalow")) {
         grid = new char[][]{
             {'-', '-', '-', '-', '-', '-', '-'},
             {'|', ' ', 'B', ' ', '|', ' ', 'B', '|'}, // Larger layout for Bungalow
@@ -20,7 +21,7 @@ public static void displayFloorPlan(String propertyType) { // This 'type' comes 
             {'|', ' ', ' ', 'L', ' ', ' ', '|'},
             {'-', '-', '-', '-', '-', '-', '-'}
         };
-    } else if (propertyType.equalsIgnoreCase("Apartment")) {
+    } else if (property.equalsIgnoreCase("Apartment")) {
         grid = new char[][]{
             {'-', '-', '-', '-', '-'},
             {'|', 'B', '|', 'K', '|'}, // Compact layout for Apartment
@@ -42,4 +43,5 @@ public static void displayFloorPlan(String propertyType) { // This 'type' comes 
         }
         System.out.println();                      // Move to next line after each row
     }
+}
 }
