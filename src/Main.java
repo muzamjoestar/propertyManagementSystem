@@ -8,7 +8,8 @@
  * @author Acer
  */
 public class Main {
-    public static void main(String[] args) {
+    
+    public static void displayy() {
         
         Property[] properties = {
             new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available",4,3 ),

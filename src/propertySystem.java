@@ -19,7 +19,7 @@ public class propertySystem {
         boolean running = true;
         
         System.out.println("[System] Checking for saved data...");
-        propertyManagerMachine.loadData();
+       /* propertyManagerMachine.loadData();*/
 
         System.out.println("--------------------------------------------");
         System.out.println(" WELCOME TO THE PROPERTY MANAGEMENT SYSTEM  ");
@@ -71,7 +71,7 @@ public class propertySystem {
                         
                     case 2:
                         // Step D: Call the view method
-                        propertyManagerMachine.displayAll();
+                        Main.displayy();
                         break;
                         
                     case 4:
