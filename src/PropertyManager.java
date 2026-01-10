@@ -9,7 +9,9 @@ import java.util.Scanner;
  */
 public class PropertyManager {
     Property[] storage = new Property[100];
+    Tenant[] store = new Tenant[100];
     int count = 0;
+    int countTenant = 0;
     Scanner input = new Scanner(System.in);
     
     public void addProperty(Property newProperty){
@@ -24,6 +26,20 @@ public class PropertyManager {
             System.out.println("An Error has occured!");
         }
 }
+    
+    public void addTenant (Tenant newTenant)
+    {
+        if(countTenant < 100)
+        {
+            store[countTenant] = newTenant;
+            countTenant++;
+        }
+        
+        else
+        {
+            System.out.println("An Error has occured!");
+        }
+    }
     
     public void deleteProperty() {
         System.out.print("Enter your property id: ");
@@ -48,5 +64,27 @@ public class PropertyManager {
         }
         System.out.println("Property ID not found.");
 }
+    
+    public void deleteTenant()
+    {
+        System.out.print("Enter your id: ");
+        String TenantID = input.nextLine();
+        
+        for(int i = 0; i < countTenant ; i++)
+        {
+            
+            String findTenantID = storage[i].getID();
+            
+            if(findTenantID.equals(TenantID))
+            {
+                store[i] = store[countTenant - 1];
+                store[countTenant - 1] = null;
+                countTenant--;
+                
+                System.out.println("Tenant " + TenantID + " has been deleted.");
+                return;
+            }
+        }
+    }
     
 }
