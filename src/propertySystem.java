@@ -29,7 +29,8 @@ public class propertySystem {
             System.out.println("\nPlease select an option:");
             System.out.println("1. Add New Property");
             System.out.println("2. View Available Properties");
-            System.out.println("3. Exit");
+            System.out.println("3. Delete Exisiting Property");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             
             // Check if user actually typed a number to prevent crashing
@@ -52,11 +53,17 @@ public class propertySystem {
                         
                         System.out.print("Enter Price (RM): ");
                         double price = input.nextDouble();
+                        
+                        System.out.print("Enter Number of Bedrooms: ");
+                        int bedrooms = input.nextInt();
+                        
+                        System.out.print("Enter Number of Bathrooms: ");
+                        int bathrooms = input.nextInt();
                         input.nextLine(); // Consume enter key again
                         
                         // Step B: Create the object
                         // Note: We use "Available" as default status
-                        Property newProp = new Property(id, type, loc, price, "Available");
+                        Property newProp = new Property(id, type, loc, price, "Available", bedrooms, bathrooms);
                         
                         // Step C: Send it to the Manager
                         propertyManagerMachine.addProperty(newProp);
@@ -67,7 +74,7 @@ public class propertySystem {
                         propertyManagerMachine.displayAll();
                         break;
                         
-                    case 3:
+                    case 4:
                         System.out.println("Saving data...");
                         propertyManagerMachine.saveData();
                         System.out.println("Exiting System. Goodbye!");
@@ -75,7 +82,7 @@ public class propertySystem {
                         break;
                         
                     default:
-                        System.out.println("Invalid choice. Please try 1-3.");
+                        System.out.println("Invalid choice. Please try 1-4.");
                 }
             } else {
                 // If they typed "abc" instead of 1

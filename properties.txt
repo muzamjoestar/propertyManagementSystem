@@ -1,1 +1,2 @@
 P001;Apartment;Gombak;1200.0;Available
+P011;Studio;Petaling Jaya;480000.0;Available
