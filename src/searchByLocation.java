@@ -2,25 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package codinghadif;
 
 /**
  *
  * @author user
  */
-public void searchByLocation(String keyword) {
+public class searchByLocation {
+    private Property[] storage;
+    private int count;
+
+    public searchByLocation(Property[] properties) {
+        this.storage = properties;
+        this.count = properties.length;
+    }
+
+    public void searchAndShowFloorPlan(String keyword) {
         boolean found = false;
         System.out.println("\n--- Searching for Location: " + keyword + " ---");
 
-        // The loop runs from 0 up to 'count' (Ipan's variable)
-        for (int i = 0; i < count; i++) { 
-            
-            // Comparison: 'location' is the variable Aqil defined
-            // 'keyword' is the value Muzam gets from the user
-            if (storage[i].location.equalsIgnoreCase(keyword)) { 
-                
-                // If matched, you call 'printDetails' (Aqil's method)
-                storage[i].printDetails(); 
+        displayFloorPlan floorPlan = new displayFloorPlan();
+
+        for (int i = 0; i < count; i++) {
+            if (storage[i].getLocation().equalsIgnoreCase(keyword)) {
+                storage[i].printDetails(); // show property info
+                floorPlan.showFloorPlan(storage[i].getType()); // show floor plan for property type
                 found = true;
             }
         }
@@ -29,3 +34,4 @@ public void searchByLocation(String keyword) {
             System.out.println("Result: No properties found in " + keyword);
         }
     }
+}

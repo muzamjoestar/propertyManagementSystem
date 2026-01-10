@@ -19,7 +19,7 @@ public class Property {
     private int bathrooms;
 
     
-    public Property(String propertyID, String type, String location, double price, String status) {
+    public Property(String propertyID, String type, String location, double price, String status , int bedrooms, int bathrooms) {
         this.propertyID = propertyID;
         this.type = type;
         this.location = location;

@@ -11,21 +11,21 @@ public class Main {
     public static void main(String[] args) {
         
         Property[] properties = {
-            new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", ),
-            new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold"),
-            new Property("P003", "Apartment", "Ampang", 450000.00, "Available"),
-            new Property("P004", "Condominium", "Cheras", 750000.00, "Rented"),
-            new Property("P005", "Studio", "Mont Kiara", 500000.00, "Available"),
-            new Property("P006", "Cluster House", "Shah Alam", 1200000.00, "Available"),
-            new Property("P007", "Bungalow", "Damansara", 2800000.00, "Sold"),
-            new Property("P008", "Terrace House", "Kajang", 550000.00, "Available"),
-            new Property("P009", "Apartment", "Bangi", 400000.00, "Available"),
-            new Property("P010", "Condominium", "Subang Jaya", 80000.00, "Rented"),
-            new Property("P011", "Studio", "Petaling Jaya", 480000.00, "Available"),
-            new Property("P012", "Cluster House", "Cyberjaya", 1240000.00, "Available"),
-            new Property("P013", "Studio", "Bukit Bintang", 800000.00, "Sold"),
-            new Property("P014", "Terrace House", "Seremban", 500000.00, "Available"),
-            new Property("P015", "Apartment", "Kepong", 420000.00, "Available"),
+            new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available",4,3 ),
+            new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3,3),
+            new Property("P003", "Apartment", "Ampang", 450000.00, "Available",1,1),
+            new Property("P004", "Condominium", "Cheras", 750000.00, "Rented",3,2),
+            new Property("P005", "Studio", "Mont Kiara", 500000.00, "Available",1,1),
+            new Property("P006", "Cluster House", "Shah Alam", 1200000.00, "Available",3,3),
+            new Property("P007", "Bungalow", "Damansara", 2800000.00, "Sold",4,3),
+            new Property("P008", "Terrace House", "Kajang", 550000.00, "Available",4,4),
+            new Property("P009", "Apartment", "Bangi", 400000.00, "Available",1,1),
+            new Property("P010", "Condominium", "Subang Jaya", 80000.00, "Rented",3,2),
+            new Property("P011", "Studio", "Petaling Jaya", 480000.00, "Available",1,1),
+            new Property("P012", "Cluster House", "Cyberjaya", 1240000.00, "Available",3,3),
+            new Property("P013", "Studio", "Bukit Bintang", 800000.00, "Sold",1,1),
+            new Property("P014", "Terrace House", "Seremban", 500000.00, "Available",3,3),
+            new Property("P015", "Apartment", "Kepong", 420000.00, "Available",1,1),
         };
         
        Tenant[] tenants = {
