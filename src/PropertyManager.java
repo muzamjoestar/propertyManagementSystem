@@ -73,7 +73,7 @@ public class PropertyManager {
         for(int i = 0; i < countTenant ; i++)
         {
             
-            String findTenantID = storage[i].getID();
+            String findTenantID = store[i].getTID();
             
             if(findTenantID.equals(TenantID))
             {
@@ -85,6 +85,8 @@ public class PropertyManager {
                 return;
             }
         }
+        
+        System.out.println("Tenant ID not found.");
     }
     
 }
