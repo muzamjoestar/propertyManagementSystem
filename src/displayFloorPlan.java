@@ -9,37 +9,45 @@ import java.io.*;
  * @author user
  */
 public class displayFloorPlan {
+public void displayFloorPlan(String propertyType) {
 
+        propertyType = propertyType.trim();
 
-    private static final String FILE_NAME = "floorplan.txt";
+        String filename = "floorplans/floorplans.txt";
+        String searchTag = "[" + propertyType.toUpperCase() + "]";
 
-   
-    public static void displayFloorPlan(String type) {
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+        boolean print = false;
+        boolean found = false;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line;
-            boolean print = false;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
 
-                // Start printing when find type
-                if (line.equalsIgnoreCase("[" + type + "]")) {
+                if (line.equalsIgnoreCase(searchTag)) {
                     print = true;
+                    found = true;
                     continue;
                 }
 
-                
+                if (line.startsWith("[") && print) {
+                    break;
+                }
+
                 if (print) {
-                    if (line.startsWith("[")) break;
                     System.out.println(line);
                 }
             }
 
-            if (!print) {
-                System.out.println("Floor plan for \"" + type + "\" not found.");
+            reader.close();
+
+            if (!found) {
+                System.out.println("Floor plan for \"" + propertyType + "\" not found.");
             }
 
         } catch (IOException e) {
-            System.out.println("Error reading floorplans.txt");
+            System.out.println("Error reading floor plan file.");
         }
-    }
+}
 }
