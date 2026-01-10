@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         
         Property[] properties = {
-            new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available"),
+            new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", ),
             new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold"),
             new Property("P003", "Apartment", "Ampang", 450000.00, "Available"),
             new Property("P004", "Condominium", "Cheras", 750000.00, "Rented"),

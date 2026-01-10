@@ -10,7 +10,6 @@ import java.io.*;
  */
 public class displayFloorPlan {
 
-public class FloorPlanReader {
 
     private static final String FILE_NAME = "floorplan.txt";
 
@@ -43,6 +42,4 @@ public class FloorPlanReader {
             System.out.println("Error reading floorplans.txt");
         }
     }
-}
-
 }

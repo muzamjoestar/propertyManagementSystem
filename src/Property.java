@@ -15,6 +15,8 @@ public class Property {
     private String location;
     private double price;
     private String status;
+    private int bedrooms;
+    private int bathrooms;
 
     
     public Property(String propertyID, String type, String location, double price, String status) {
@@ -23,6 +25,8 @@ public class Property {
         this.location = location;
         this.price = price;
         this.status = status;
+        this.bedrooms = bedrooms;
+        this.bathrooms = bathrooms;
     }
 
     public void printDetails() {
@@ -31,6 +35,8 @@ public class Property {
         System.out.println("Location: " + location);
         System.out.println("Price: RM " + price);
         System.out.println("Status: " + status);
+        System.out.println("Bedrooms: " + bedrooms);
+        System.out.println("Bathrooms: " + bathrooms);
         System.out.println("---------------------------");
     }
     public String getID() { return propertyID; }
@@ -38,8 +44,10 @@ public class Property {
     public String getLocation() { return location; }
     public double getPrice() { return price; }
     public String getStatus() { return status; }
+    public int getBedrooms() { return bedrooms; }
+    public int getBathrooms() { return bathrooms; }
     public String toFileString() {
-        return propertyID + ";" + type + ";" + location + ";" + price + ";" + status;
+        return propertyID + ";" + type + ";" + location + ";" + price + ";" + status + ";" + bedrooms + ";" +bathrooms;
     }
 }
 
