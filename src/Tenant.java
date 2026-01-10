@@ -51,8 +51,17 @@ public class Tenant {
         System.out.println("Nationality: " + nationality);
         System.out.println("---------------------------");
     }
-    
+    public String getTID() { return tenantID; }
+    public String getName() { return name; }
+    public String getGender() { return gender; }
+    public int getAge() { return age; }
+    public String getContact() { return contactNumber; }
+    public String getEmail() { return email; }
+    public String getOccupation() { return occupation; }
+    public double getIncome() { return monthlyIncome; }
+    public String getMarital() { return maritalStatus; }
+    public String getNationality() { return nationality; }
     public String toFileString() {
-        return tenantID + ";" + name + ";" + contactNumber + ";" + email + ";" + nationality;
+        return tenantID + ";" + name + ";" + age + ";" + contactNumber + ";" + email + ";" + occupation + ";" + monthlyIncome + ";" + maritalStatus + ";" + nationality;
     }
 }
