@@ -2,9 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+/**
+ *
+ * @author User
+ */
 import java.util.Scanner;
 
-public class propertySystem{
+public class propertySystemInterface{
 
     // --- GLOBAL STORAGE (STATIC) ---
     // These replace the PropertyManager object
