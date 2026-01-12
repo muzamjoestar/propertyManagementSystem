@@ -97,9 +97,9 @@ public class propertyManagerMachine {
                     String[] data = line.split(";");
                     
                     if(data.length >= 5) { 
-                        Property p = new Property(data[0], data[1], data[2], Double.parseDouble(data[3]), data[4]);
-                        properties[propertyCount] = p;
-                        propertyCount++;
+                        // Property p = new Property(data[0], data[1], data[2], Double.parseDouble(data[3]), data[4]);
+                        //properties[propertyCount] = p;
+                        //propertyCount++;
                     }
                 }
                 propertyScan.close();

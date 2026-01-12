@@ -54,16 +54,15 @@ public class propertySystem {
                         System.out.print("Enter Price (RM): ");
                         double price = input.nextDouble();
                         
-                        System.out.print("Enter Number of Bedrooms: ");
-                        int bedrooms = input.nextInt();
-                        
-                        System.out.print("Enter Number of Bathrooms: ");
-                        int bathrooms = input.nextInt();
+                        int bedroom = 0;
+                        int bathroom = 0;
                         input.nextLine(); // Consume enter key again
                         
                         // Step B: Create the object
                         // Note: We use "Available" as default status
-                        Property newProp = new Property(id, type, loc, price, "Available", bedrooms, bathrooms);
+                        Property newProp = new Property(id, type, loc, price, "Available", bedroom, bathroom);
+                        String[][] floorPlan = new String[100][100];
+                        // displayFloorPlan.showFloorPlan(floorPlan[][]);
                         
                         // Step C: Send it to the Manager
                         propertyManagerMachine.addProperty(newProp);
