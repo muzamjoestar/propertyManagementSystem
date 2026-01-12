@@ -7,25 +7,19 @@
  *
  * @author user
  */
-public class searchByLocation {
-    private Property[] storage;
-    private int count;
-
-    public searchByLocation(Property[] properties) {
-        this.storage = properties;
-        this.count = properties.length;
-    }
-
-    public void searchAndShowFloorPlan(String keyword) {
+public void searchByLocation(String keyword) {
         boolean found = false;
         System.out.println("\n--- Searching for Location: " + keyword + " ---");
 
-        displayFloorPlan floorPlan = new displayFloorPlan();
-
-        for (int i = 0; i < count; i++) {
-            if (storage[i].getLocation().equalsIgnoreCase(keyword)) {
-                storage[i].printDetails(); // show property info
-                floorPlan.showFloorPlan(storage[i].getType()); // show floor plan for property type
+        // The loop runs from 0 up to 'count' (Ipan's variable)
+        for (int i = 0; i < count; i++) { 
+            
+            // Comparison: 'location' is the variable Aqil defined
+            // 'keyword' is the value Muzam gets from the user
+            if (storage[i].location.equalsIgnoreCase(keyword)) { 
+                
+                // If matched, you call 'printDetails' (Aqil's method)
+                storage[i].printDetails(); 
                 found = true;
             }
         }
@@ -34,4 +28,3 @@ public class searchByLocation {
             System.out.println("Result: No properties found in " + keyword);
         }
     }
-}
