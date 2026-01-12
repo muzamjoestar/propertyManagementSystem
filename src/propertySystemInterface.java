@@ -9,20 +9,20 @@
  */
 import java.util.Scanner;
 
-public class propertySystemInterface{
+// THE NAME HERE MUST MATCH YOUR FILE NAME EXACTLY
+public class propertySystemInterface {
 
-    // --- GLOBAL STORAGE (STATIC) ---
-    // These replace the PropertyManager object
-    static Property[] properties = new Property[100]; // Can hold 100 properties
-    static Tenant[] tenants = new Tenant[100];        // Can hold 100 tenants
-    static int pCount = 0; // Tracks how many properties we have
-    static int tCount = 0; // Tracks how many tenants we have
+    // --- GLOBAL STORAGE ---
+    static Property[] properties = new Property[100]; 
+    static Tenant[] tenants = new Tenant[100];        
+    static int pCount = 0; 
+    static int tCount = 0; 
     
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
         
-        // 1. Load the hardcoded data immediately
+        // Load initial data so the list isn't empty
         initializeData(); 
 
         boolean running = true;
@@ -45,23 +45,18 @@ public class propertySystemInterface{
 
                 switch(choice) {
                     case 1:
-                        // Call the static add function defined below
                         addNewPropertyProcess(); 
                         break;
-                        
                     case 2:
                         displayAllProperties();
                         break;
-                        
                     case 3:
                         deletePropertyProcess();
                         break;
-                        
                     case 4:
                         System.out.println("Exiting System. Goodbye!");
                         running = false;
                         break;
-                        
                     default:
                         System.out.println("Invalid choice. Please try 1-4.");
                 }
@@ -72,27 +67,22 @@ public class propertySystemInterface{
         }
     }
 
-    // --- LOGIC METHODS ---
+    // --- METHODS ---
 
-    // 1. Method to Load your Hardcoded Data
     public static void initializeData() {
-        // Add Properties
+        // Add hardcoded properties
         addProperty(new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", 4, 3));
         addProperty(new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3, 3));
         addProperty(new Property("P003", "Apartment", "Ampang", 450000.00, "Available", 1, 1));
-        addProperty(new Property("P004", "Condominium", "Cheras", 750000.00, "Rented", 3, 2));
-        addProperty(new Property("P005", "Studio", "Mont Kiara", 500000.00, "Available", 1, 1));
-        // ... You can add the rest of your list here ...
+        // ... (You can add the rest of your list here) ...
 
-        // Add Tenants
+        // Add hardcoded tenants
         addTenant(new Tenant("T001", "Ali Abu", "Male", 30, "012-3456789", "ali@gmail.com", "Engineer", 5000, "Single", "Malaysian"));
         addTenant(new Tenant("T002", "Siti Zubaidah", "Female", 28, "013-9876543", "siti@gmail.com", "Teacher", 4000, "Married", "Malaysian"));
-        // ... You can add the rest here ...
         
-        System.out.println("[System] Data loaded successfully.");
+        System.out.println("[System] Initial data loaded.");
     }
 
-    // 2. Helper to add to array safely
     public static void addProperty(Property p) {
         if (pCount < properties.length) {
             properties[pCount] = p;
@@ -109,18 +99,15 @@ public class propertySystemInterface{
         }
     }
 
-    // 3. The Display Logic
     public static void displayAllProperties() {
         System.out.println("\n--- LIST OF PROPERTIES ---");
-        System.out.printf("%-10s %-15s %-15s %-10s\n", "ID", "Type", "Location", "Status");
         for (int i = 0; i < pCount; i++) {
-            System.out.printf("%-10s %-15s %-15s %-10s\n", 
-                properties[i].getID(), properties[i].getType(), 
-                properties[i].getLocation(), properties[i].getStatus()); // Assuming getters exist
+            // Using the printDetails method you wrote in Property.java
+            System.out.println("#" + (i+1));
+            properties[i].printDetails(); 
         }
     }
 
-    // 4. The Delete Logic
     public static void deletePropertyProcess() {
         System.out.print("Enter Property ID to delete: ");
         String id = input.nextLine();
@@ -128,9 +115,9 @@ public class propertySystemInterface{
         boolean found = false;
         for (int i = 0; i < pCount; i++) {
             if (properties[i].getID().equalsIgnoreCase(id)) {
-                // Swap with the last item to fill the gap
+                // Swap logic
                 properties[i] = properties[pCount - 1];
-                properties[pCount - 1] = null; // Clear the duplicate
+                properties[pCount - 1] = null; 
                 pCount--;
                 found = true;
                 System.out.println("Property " + id + " deleted.");
@@ -142,7 +129,6 @@ public class propertySystemInterface{
         }
     }
 
-    // 5. The Add New Property Logic (With Floor Plan)
     public static void addNewPropertyProcess() {
         System.out.println("\n--- ADD NEW PROPERTY ---");
         System.out.print("Enter Property ID: ");
@@ -196,10 +182,13 @@ public class propertySystemInterface{
         }
         System.out.println("Detected: " + bed + " Beds, " + bath + " Baths.");
 
-        // Create and Save
+        // Create Object
         Property newP = new Property(id, type, loc, price, "Available", bed, bath);
-        // newP.setLayout(floorPlan); // Enable this if you added the setLayout method
+        
+        // Save the map inside the object (This works now because you updated Property.java)
+        newP.setLayout(floorPlan); 
+        
         addProperty(newP);
-        System.out.println("Property Added!");
+        System.out.println("Property Added Successfully!");
     }
 }
