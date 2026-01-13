@@ -39,7 +39,7 @@ public class PropertyManager {
         }
     }
 
-    // --- 4. DELETE PROPERTY ---
+    // --- DELETE PROPERTY ---
     public static void deleteProperty(String id) {
         boolean found = false;
         
@@ -61,6 +61,38 @@ public class PropertyManager {
         
         if (!found) {
             System.out.println("Error: Property ID '" + id + "' not found.");
+        }
+    }
+    
+    public static void displayAllTenants() {
+        System.out.println("\n--- LIST OF TENANTS ---");
+        if (Main.tCount == 0) {
+            System.out.println("No tenants found.");
+        } else {
+            for (int i = 0; i < Main.tCount; i++) {
+                System.out.print((i + 1) + ". ");
+                // Calls the printDetails() method inside Tenant.java
+                Main.tenants[i].printDetails(); 
+            }
+        }
+    }
+
+    // --- DELETE TENANT ---
+    public static void deleteTenant(String id) {
+        boolean found = false;
+        for (int i = 0; i < Main.tCount; i++) {
+            if (Main.tenants[i].getTID().equalsIgnoreCase(id)) {
+                // Swap logic
+                Main.tenants[i] = Main.tenants[Main.tCount - 1];
+                Main.tenants[Main.tCount - 1] = null; 
+                Main.tCount--; 
+                found = true;
+                System.out.println("Success: Tenant " + id + " has been deleted.");
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Error: Tenant ID '" + id + "' not found.");
         }
     }
 }

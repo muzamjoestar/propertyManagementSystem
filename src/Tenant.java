@@ -19,11 +19,12 @@ public class Tenant {
     private double monthlyIncome;
     private String maritalStatus;
     private String nationality;
+    private String propertyID;
 
 
     public Tenant(String tenantID, String name, String gender, int age, String contactNumber,
                   String email, String occupation, double monthlyIncome,
-                  String maritalStatus, String nationality) {
+                  String maritalStatus, String nationality, String propertyID) {
         this.tenantID = tenantID;
         this.name = name;
         this.gender = gender;
@@ -34,7 +35,7 @@ public class Tenant {
         this.monthlyIncome = monthlyIncome;
         this.maritalStatus = maritalStatus;
         this.nationality = nationality;
-        
+        this.propertyID = propertyID;
     }
 
 
@@ -61,7 +62,15 @@ public class Tenant {
     public double getIncome() { return monthlyIncome; }
     public String getMarital() { return maritalStatus; }
     public String getNationality() { return nationality; }
+    public String getPropertyID() { return propertyID; }
+    
+    public void setPropertyID(String pid){
+        this.propertyID = pid; 
+    
+    }
     public String toFileString() {
-        return tenantID + ";" + name + ";" + age + ";" + contactNumber + ";" + email + ";" + occupation + ";" + monthlyIncome + ";" + maritalStatus + ";" + nationality;
+        return tenantID + ";" + name + ";" + gender + ";" + age + ";" + contactNumber + ";" + 
+               email + ";" + occupation + ";" + monthlyIncome + ";" + maritalStatus + ";" + 
+               nationality + ";" + propertyID;
     }
 }

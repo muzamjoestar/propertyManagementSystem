@@ -15,7 +15,7 @@ public class Main {
     public static int pCount = 0;
     public static int tCount = 0;
     
-    private static Property[] initialProperties = {
+    private static Property[] backupProperties = {
         new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", 4, 3),
         new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3, 3),
         new Property("P003", "Apartment", "Ampang", 450000.00, "Available", 1, 1),
@@ -33,22 +33,22 @@ public class Main {
         new Property("P015", "Apartment", "Kepong", 420000.00, "Available", 1, 1)
     };
 
-    private static Tenant[] initialTenants = {
-        new Tenant("T001", "Ali Abu", "Male", 30, "012-3456789", "ali@gmail.com", "Engineer", 5000, "Single", "Malaysian"),
-        new Tenant("T002", "Siti Zubaidah", "Female", 28, "013-9876543", "siti@gmail.com", "Teacher", 4000, "Married", "Malaysian"),
-        new Tenant("T003", "Ahmad Aqil", "Male", 35, "014-2233445", "ahmad@gmail.com", "Doctor", 8000, "Married", "Malaysian"),
-        new Tenant("T004", "Farah Ann", "Female", 26, "015-5566778", "farah@gmail.com", "Designer", 3500, "Single", "Malaysian"),
-        new Tenant("T005", "JohnCena", "Male", 40, "016-1122334", "john@gmail.com", "Manager", 9000, "Married", "American"),
-        new Tenant("T006", "Mei Ling", "Female", 32, "017-4455667", "meiling@gmail.com", "Accountant", 6000, "Single", "Chinese"),
-        new Tenant("T007", "Raj Singh", "Male", 29, "018-7788990", "raj@gmail.com", "IT Specialist", 5500, "Single", "Indian"),
-        new Tenant("T008", "Aisyah Mahmud", "Female", 27, "019-9988776", "aisyah@gmail.com", "Nurse", 3800, "Married", "Malaysian"),
-        new Tenant("T009", "Daniel Mc. Dodo", "Male", 33, "011-3344556", "daniel@gmail.com", "Pilot", 12000, "Married", "British"),
-        new Tenant("T010", "Nora Danish", "Female", 31, "012-6677889", "nora@gmail.com", "Lawyer", 7000, "Single", "Malaysian"),
-        new Tenant("T011", "Hafiz Fauzi", "Male", 36, "013-2233556", "hafiz@gmail.com", "Lecturer", 6500, "Married", "Malaysian"),
-        new Tenant("T012", "Lina Pompom", "Female", 25, "014-8899001", "lina@gmail.com", "Student", 1500, "Single", "Indonesian"),
-        new Tenant("T013", "Syafiq Kyle", "Male", 34, "015-5566442", "syafiqkyle@gmail.com", "Architect", 7200, "Married", "Malaysian"),
-        new Tenant("T014", "Maria Lee", "Female", 29, "016-7788223", "maria@gmail.com", "Chef", 4000, "Single", "Spanish"),
-        new Tenant("T015", "Zul Fahmi", "Male", 37, "017-9900112", "zul@gmail.com", "Businessman", 10000, "Married", "Malaysian")
+        private static Tenant[] backupTenants = {
+        new Tenant("T001", "Ali Abu", "Male", 30, "012-3456789", "ali@gmail.com", "Engineer", 5000, "Single", "Malaysian", "P001"),
+        new Tenant("T002", "Siti Zubaidah", "Female", 28, "013-9876543", "siti@gmail.com", "Teacher", 4000, "Married", "Malaysian", "P002"),
+        new Tenant("T003", "Ahmad Aqil", "Male", 35, "014-2233445", "ahmad@gmail.com", "Doctor", 8000, "Married", "Malaysian", "P003"),
+        new Tenant("T004", "Farah Ann", "Female", 26, "015-5566778", "farah@gmail.com", "Designer", 3500, "Single", "Malaysian", "P004"),
+        new Tenant("T005", "JohnCena", "Male", 40, "016-1122334", "john@gmail.com", "Manager", 9000, "Married", "American", "P005"),
+        new Tenant("T006", "Mei Ling", "Female", 32, "017-4455667", "meiling@gmail.com", "Accountant", 6000, "Single", "Chinese", "P006"),
+        new Tenant("T007", "Raj Singh", "Male", 29, "018-7788990", "raj@gmail.com", "IT Specialist", 5500, "Single", "Indian", "P007"),
+        new Tenant("T008", "Aisyah Mahmud", "Female", 27, "019-9988776", "aisyah@gmail.com", "Nurse", 3800, "Married", "Malaysian", "P008"),
+        new Tenant("T009", "Daniel Mc. Dodo", "Male", 33, "011-3344556", "daniel@gmail.com", "Pilot", 12000, "Married", "British", "P009"),
+        new Tenant("T010", "Nora Danish", "Female", 31, "012-6677889", "nora@gmail.com", "Lawyer", 7000, "Single", "Malaysian", "P010"),
+        new Tenant("T011", "Hafiz Fauzi", "Male", 36, "013-2233556", "hafiz@gmail.com", "Lecturer", 6500, "Married", "Malaysian", "N/A"),
+        new Tenant("T012", "Lina Pompom", "Female", 25, "014-8899001", "lina@gmail.com", "Student", 1500, "Single", "Indonesian", "N/A"),
+        new Tenant("T013", "Syafiq Kyle", "Male", 34, "015-5566442", "syafiqkyle@gmail.com", "Architect", 7200, "Married", "Malaysian", "N/A"),
+        new Tenant("T014", "Maria Lee", "Female", 29, "016-7788223", "maria@gmail.com", "Chef", 4000, "Single", "Spanish", "N/A"),
+        new Tenant("T015", "Zul Fahmi", "Male", 37, "017-9900112", "zul@gmail.com", "Businessman", 10000, "Married", "Malaysian", "N/A")
     };
     
     public static void loadData() {
@@ -78,7 +78,15 @@ public class Main {
         } 
         // Scenario B: No File -> Load Hardcoded Backup
         else {
-            System.out.println("-> File not found.");
+            // SCENARIO B: No File -> Load Hardcoded Backup
+            System.out.println("-> properties.txt not found. Loading backup data...");
+            
+            for (int i = 0; i < backupProperties.length; i++) {
+                // We copy the property from the backup array to the main array
+                properties[pCount] = backupProperties[i];
+                pCount++;
+            }
+            System.out.println("-> Loaded " + pCount + " properties from backup.");
         }
         
         if (tFile.exists()) {
@@ -89,11 +97,14 @@ public class Main {
                     if (line.trim().isEmpty()) continue;
 
                     String[] data = line.split(";");
-                    if (data.length >= 10) {
+                    // Inside loadData() for Tenants...
+
+                    if (data.length >= 11) { 
                         tenants[tCount] = new Tenant(
                             data[0], data[1], data[2], Integer.parseInt(data[3]), 
                             data[4], data[5], data[6], Double.parseDouble(data[7]), 
-                            data[8], data[9]
+                            data[8], data[9], 
+                            data[10] // <--- Pass the new PropertyID (the 11th item)
                         );
                         tCount++;
                     }
@@ -105,9 +116,17 @@ public class Main {
             }
         
         }
-        else{
-            System.out.println("-> File not found. Loading backup data...");
+        else {
+            // SCENARIO B: No File -> Load Hardcoded Backup
+            System.out.println("-> tenants.txt not found. Loading backup data...");
+            
+            for (int i = 0; i < backupTenants.length; i++) {
+                // We copy the tenant from the backup array to the main array
+                tenants[tCount] = backupTenants[i];
+                tCount++;
             }
+            System.out.println("-> Loaded " + tCount + " tenants from backup.");
+        }
         }
 
 

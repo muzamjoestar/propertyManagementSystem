@@ -72,6 +72,10 @@ public class Property {
     public int getBedrooms() { return bedrooms; }
     public int getBathrooms() { return bathrooms; }
     
+    public void setStatus(String newStatus) {
+    this.status = newStatus;
+    }
+    
     public String toFileString() {
         return propertyID + ";" + type + ";" + location + ";" + price + ";" + status + ";" + bedrooms + ";" +bathrooms;
     }

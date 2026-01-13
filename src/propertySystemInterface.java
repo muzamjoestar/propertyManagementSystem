@@ -56,11 +56,20 @@ public class propertySystemInterface {
                         // We pass the 'properties' array and 'pCount' variable
                         searchByLocation.search(Main.properties, Main.pCount, userSearch);
                         break;
-                    case 5:
+                    case 5: 
+                        addNewTenantProcess(); 
+                        break;
+                    case 6: 
+                        PropertyManager.displayAllTenants(); 
+                        break;
+                    case 7: deleteTenantProcess(); 
+                        break;
+                    case 8:
                         System.out.println("Exiting System. Goodbye!");
                         Main.saveData();
                         running = false;
                         break;
+                // ------------------------
                     default:
                         System.out.println("Invalid choice. Please try 1-4.");
                 }
@@ -178,5 +187,83 @@ public class propertySystemInterface {
         
         // CALL THE MANAGER
         PropertyManager.deleteProperty(id);
+    }
+    // --- ADD TENANT ---
+    public static void addNewTenantProcess() {
+        System.out.println("\n--- ADD NEW TENANT ---");
+        
+        System.out.print("ID (e.g. T001): ");
+        String id = input.nextLine();
+        
+        System.out.print("Name: ");
+        String name = input.nextLine();
+        
+        System.out.print("Gender: ");
+        String gender = input.nextLine();
+        
+        // Safety Check for Age
+        int age = 0;
+        while(true) {
+            System.out.print("Age: ");
+            if(input.hasNextInt()) { age = input.nextInt(); input.nextLine(); break; }
+            else { System.out.println("Enter a number."); input.next(); }
+        }
+
+        System.out.print("Contact No: ");
+        String contact = input.nextLine();
+        
+        System.out.print("Email: ");
+        String email = input.nextLine();
+        
+        System.out.print("Occupation: ");
+        String job = input.nextLine();
+        
+        // Safety Check for Income
+        double income = 0;
+        while(true) {
+            System.out.print("Monthly Income: ");
+            if(input.hasNextDouble()) { income = input.nextDouble(); input.nextLine(); break; }
+            else { System.out.println("Enter a number."); input.next(); }
+        }
+        
+        System.out.print("Marital Status: ");
+        String marital = input.nextLine();
+        
+        System.out.print("Nationality: ");
+        String nation = input.nextLine();
+        
+        // --- ASK FOR PROPERTY ---
+        System.out.print("Assign Property ID (or type 'N/A'): ");
+        String pID = input.nextLine();
+        
+    
+        if (!pID.equalsIgnoreCase("N/A")) {
+            // Find the property and change status to Rented
+            boolean found = false;
+            for(int i=0; i<Main.pCount; i++) {
+                if(Main.properties[i].getID().equalsIgnoreCase(pID)) {
+                    Main.properties[i].setStatus("Rented"); // Assuming you have setStatus setter
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) {
+                System.out.println("Warning: That Property ID does not exist!");
+            }
+        }
+        // You could loop through Main.properties here to verify pID is valid.
+
+        // Create Object (Pass pID at the end)
+        Tenant newT = new Tenant(id, name, gender, age, contact, email, job, income, marital, nation, pID);
+
+        PropertyManager.addTenant(newT);
+        System.out.println("Tenant Added Successfully!");
+    }
+
+    // --- HELPER: DELETE TENANT ---
+    public static void deleteTenantProcess() {
+        System.out.print("Enter Tenant ID to delete: ");
+        String id = input.nextLine();
+        PropertyManager.deleteTenant(id);
     }
 }
