@@ -2,15 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
 /**
  *
  * @author Acer
  */
 public class Main {
     
-    // 1. "public static" means any other file can access 'Main.initialProperties' and 'Main.initialTenants'
-    public static Property[] initialProperties = {
+    public static Property[] properties = new Property[100];
+    public static Tenant[] tenants = new Tenant[100];
+    public static int pCount = 0;
+    public static int tCount = 0;
+    
+    private static Property[] initialProperties = {
         new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", 4, 3),
         new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3, 3),
         new Property("P003", "Apartment", "Ampang", 450000.00, "Available", 1, 1),
@@ -28,7 +36,7 @@ public class Main {
         new Property("P015", "Apartment", "Kepong", 420000.00, "Available", 1, 1)
     };
 
-    public static Tenant[] initialTenants = {
+    private static Tenant[] initialTenants = {
         new Tenant("T001", "Ali Abu", "Male", 30, "012-3456789", "ali@gmail.com", "Engineer", 5000, "Single", "Malaysian"),
         new Tenant("T002", "Siti Zubaidah", "Female", 28, "013-9876543", "siti@gmail.com", "Teacher", 4000, "Married", "Malaysian"),
         new Tenant("T003", "Ahmad Aqil", "Male", 35, "014-2233445", "ahmad@gmail.com", "Doctor", 8000, "Married", "Malaysian"),
@@ -45,4 +53,79 @@ public class Main {
         new Tenant("T014", "Maria Lee", "Female", 29, "016-7788223", "maria@gmail.com", "Chef", 4000, "Single", "Spanish"),
         new Tenant("T015", "Zul Fahmi", "Male", 37, "017-9900112", "zul@gmail.com", "Businessman", 10000, "Married", "Malaysian")
     };
-}
+    
+    public static void loadData() {
+        System.out.println("[Main] Loading data...");
+
+        File pFile = new File("properties.txt");
+        File tFile = new File("tenants.txt");
+        
+        // Scenario A: File Exists -> Read from File
+        if (pFile.exists()) {
+            try {
+                Scanner sc = new Scanner(pFile);
+                while (sc.hasNextLine()) {
+                    String[] data = sc.nextLine().split(";");
+                    if (data.length >= 7) {
+                        properties[pCount] = new Property(data[0], data[1], data[2], 
+                                Double.parseDouble(data[3]), data[4], 
+                                Integer.parseInt(data[5]), Integer.parseInt(data[6]));
+                        pCount++;
+                    }
+                }
+                sc.close();
+                System.out.println("-> Loaded " + pCount + " properties from file.");
+            } catch (Exception e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
+        } 
+        // Scenario B: No File -> Load Hardcoded Backup
+        else {
+            System.out.println("-> File not found.");
+        }
+        
+        if (tFile.exists()) {
+            try {
+                Scanner sc = new Scanner(tFile);
+                while (sc.hasNextLine()) {
+                    String line = sc.nextLine();
+                    if (line.trim().isEmpty()) continue;
+
+                    String[] data = line.split(";");
+                    if (data.length >= 10) {
+                        tenants[tCount] = new Tenant(
+                            data[0], data[1], data[2], Integer.parseInt(data[3]), 
+                            data[4], data[5], data[6], Double.parseDouble(data[7]), 
+                            data[8], data[9]
+                        );
+                        tCount++;
+                    }
+                }
+                sc.close();
+                System.out.println("-> Loaded " + tCount + " tenants from file.");
+            } catch (Exception e) {
+                System.out.println("Error reading tenants.txt: " + e.getMessage());
+            }
+        
+        }
+        else{
+            System.out.println("-> File not found. Loading backup data...");
+            }
+        }
+
+
+        // --- METHOD 2: SAVE DATA ---
+        public static void saveData() {
+            System.out.println("[Main] Saving data to 'properties.txt'...");
+            try {
+                FileWriter writer = new FileWriter("properties.txt");
+                for (int i = 0; i < pCount; i++) {
+                    writer.write(properties[i].toFileString() + "\n");
+                }
+                writer.close();
+                System.out.println("-> Save successful!");
+            } catch (IOException e) {
+                System.out.println("Error saving: " + e.getMessage());
+            }
+        }
+    }

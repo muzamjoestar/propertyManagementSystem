@@ -2,83 +2,63 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import java.util.Scanner;
-
 public class PropertyManager {
-    
-    // 1. Internal Storage
-    private Property[] properties;
-    private Tenant[] tenants;
-    private int pCount;
-    private int tCount;
-    
-    public PropertyManager() {
-        properties = new Property[100]; 
-        tenants = new Tenant[100];      
-        pCount = 0;
-        tCount = 0;
-    }
-    
-    // 2. THIS IS THE KEY CHANGE
-    public void initializeData() {
-        System.out.println("[System] Importing data from Main.java...");
 
-        // Loop through the array in Main.java and add them to our storage
-        for (int i = 0; i < Main.initialProperties.length; i++) {
-            addProperty(Main.initialProperties[i]);
-        }
-
-        // Loop through the tenants in Main.java
-        for (int i = 0; i < Main.initialTenants.length; i++) {
-            addTenant(Main.initialTenants[i]);
-        }
-        
-        System.out.println("[System] Data import complete.");
-    }
-
-    // 3. Add Methods (Unchanged)
-    public void addProperty(Property p) {
-        if (pCount < properties.length) {
-            properties[pCount] = p;
-            pCount++;
+    // --- 1. ADD PROPERTY ---
+    public static void addProperty(Property newProperty) {
+        if (Main.pCount < Main.properties.length) {
+            Main.properties[Main.pCount] = newProperty;
+            Main.pCount++;
+            // Note: We don't save to file here automatically. 
+            // We usually save only when the user chooses "Exit" or "Save".
         } else {
-            System.out.println("Error: Property storage is full!");
+            System.out.println("Error: Property storage is full (Max 100)!");
         }
     }
 
-    public void addTenant(Tenant t) {
-        if (tCount < tenants.length) {
-            tenants[tCount] = t;
-            tCount++;
+    // --- 2. ADD TENANT ---
+    public static void addTenant(Tenant newTenant) {
+        if (Main.tCount < Main.tenants.length) {
+            Main.tenants[Main.tCount] = newTenant;
+            Main.tCount++;
+        } else {
+            System.out.println("Error: Tenant storage is full (Max 100)!");
         }
     }
 
-    // 4. Display Method
-    public void displayAllProperties() {
+    // --- 3. DISPLAY ALL PROPERTIES ---
+    public static void displayAllProperties() {
         System.out.println("\n--- LIST OF PROPERTIES ---");
-        if (pCount == 0) {
+        if (Main.pCount == 0) {
             System.out.println("No properties found.");
         } else {
-            for (int i = 0; i < pCount; i++) {
+            for (int i = 0; i < Main.pCount; i++) {
                 System.out.print((i + 1) + ". ");
-                properties[i].printDetails(); 
+                Main.properties[i].printDetails(); 
             }
         }
     }
 
-    // 5. Delete Method
-    public void deleteProperty(String id) {
+    // --- 4. DELETE PROPERTY ---
+    public static void deleteProperty(String id) {
         boolean found = false;
-        for (int i = 0; i < pCount; i++) {
-            if (properties[i].getID().equalsIgnoreCase(id)) {
-                properties[i] = properties[pCount - 1];
-                properties[pCount - 1] = null; 
-                pCount--; 
+        
+        for (int i = 0; i < Main.pCount; i++) {
+            // Check if ID matches (IgnoreCase handles p001 vs P001)
+            if (Main.properties[i].getID().equalsIgnoreCase(id)) {
+                
+                // Swap the deleted item with the last item in the list
+                // This fills the hole so we don't have nulls in the middle
+                Main.properties[i] = Main.properties[Main.pCount - 1];
+                Main.properties[Main.pCount - 1] = null; // Delete the duplicate at the end
+                
+                Main.pCount--; // Decrease count
                 found = true;
                 System.out.println("Success: Property " + id + " has been deleted.");
-                break; 
+                break; // Stop looking
             }
         }
+        
         if (!found) {
             System.out.println("Error: Property ID '" + id + "' not found.");
         }
