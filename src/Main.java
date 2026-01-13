@@ -9,7 +9,7 @@
  */
 public class Main {
     
-    // 1. "public static" means any other file can access 'Main.initialProperties'
+    // 1. "public static" means any other file can access 'Main.initialProperties' and 'Main.initialTenants'
     public static Property[] initialProperties = {
         new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", 4, 3),
         new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3, 3),

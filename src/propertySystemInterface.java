@@ -7,12 +7,16 @@
  *
  * @author User
  */
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-// THE NAME HERE MUST MATCH YOUR FILE NAME EXACTLY
 public class propertySystemInterface {
 
-    // --- GLOBAL STORAGE ---
+    // --- STATIC STORAGE (Global Variables) ---
+    // These belong to the class, not an object.
     static Property[] properties = new Property[100]; 
     static Tenant[] tenants = new Tenant[100];        
     static int pCount = 0; 
@@ -22,7 +26,7 @@ public class propertySystemInterface {
 
     public static void main(String[] args) {
         
-        // Load initial data so the list isn't empty
+        // 1. Load data using a STATIC method
         initializeData(); 
 
         boolean running = true;
@@ -31,29 +35,38 @@ public class propertySystemInterface {
         System.out.println(" WELCOME TO THE PROPERTY MANAGEMENT SYSTEM  ");
         System.out.println("--------------------------------------------");
 
-        while(running) {
+        while(running == true) {
             System.out.println("\nPlease select an option:");
             System.out.println("1. Add New Property");
             System.out.println("2. View Available Properties");
             System.out.println("3. Delete Existing Property");
-            System.out.println("4. Exit");
+            System.out.println("4. Search Properties by Location");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             
             if (input.hasNextInt()) {
                 int choice = input.nextInt();
-                input.nextLine(); // Fix skip bug
+                input.nextLine(); // Fix "Enter key" skip bug
 
                 switch(choice) {
                     case 1:
-                        addNewPropertyProcess(); 
+                        addNewPropertyProcess(); // Call static method
                         break;
                     case 2:
-                        displayAllProperties();
+                        displayAllProperties(); // Call static method
                         break;
                     case 3:
-                        deletePropertyProcess();
+                        deletePropertyProcess(); // Call static method
                         break;
                     case 4:
+                        System.out.print("Enter location to search (e.g. Gombak): ");
+                        String userSearch = input.nextLine();
+
+                        // Call the separate class
+                        // We pass the 'properties' array and 'pCount' variable
+                        searchByLocation.search(properties, pCount, userSearch);
+                        break;
+                    case 5:
                         System.out.println("Exiting System. Goodbye!");
                         running = false;
                         break;
@@ -67,47 +80,59 @@ public class propertySystemInterface {
         }
     }
 
-    // --- METHODS ---
+    // ==========================================
+    //       ALL LOGIC IS NOW STATIC BELOW
+    // ==========================================
 
+    // 1. Initialize Data (Fetches from Main.java)
     public static void initializeData() {
-        // Add hardcoded properties
-        addProperty(new Property("P001", "Bungalow", "Setapak", 2500000.00, "Available", 4, 3));
-        addProperty(new Property("P002", "Terrace House", "Gombak", 600000.00, "Sold", 3, 3));
-        addProperty(new Property("P003", "Apartment", "Ampang", 450000.00, "Available", 1, 1));
-        // ... (You can add the rest of your list here) ...
+        System.out.println("[System] Importing data from Main.java...");
 
-        // Add hardcoded tenants
-        addTenant(new Tenant("T001", "Ali Abu", "Male", 30, "012-3456789", "ali@gmail.com", "Engineer", 5000, "Single", "Malaysian"));
-        addTenant(new Tenant("T002", "Siti Zubaidah", "Female", 28, "013-9876543", "siti@gmail.com", "Teacher", 4000, "Married", "Malaysian"));
+        // Loop through the STATIC array in Main.java
+        for (int i = 0; i < Main.initialProperties.length; i++) {
+            addProperty(Main.initialProperties[i]);
+        }
+
+        // Loop through the STATIC tenants in Main.java
+        for (int i = 0; i < Main.initialTenants.length; i++) {
+            addTenant(Main.initialTenants[i]);
+        }
         
-        System.out.println("[System] Initial data loaded.");
+        System.out.println("[System] Data import complete.");
     }
 
+    // 2. Add Property (Static Helper)
     public static void addProperty(Property p) {
         if (pCount < properties.length) {
             properties[pCount] = p;
             pCount++;
         } else {
-            System.out.println("Error: Storage full!");
+            System.out.println("Error: Property storage is full!");
         }
     }
 
+    // 3. Add Tenant (Static Helper)
     public static void addTenant(Tenant t) {
         if (tCount < tenants.length) {
             tenants[tCount] = t;
             tCount++;
         }
+        else {
+            System.out.println("Error: Tenant storage is full!");
+        }
     }
 
+    // 4. Display Logic
     public static void displayAllProperties() {
         System.out.println("\n--- LIST OF PROPERTIES ---");
         for (int i = 0; i < pCount; i++) {
-            // Using the printDetails method you wrote in Property.java
-            System.out.println("#" + (i+1));
+            System.out.print((i + 1) + ". ");
+            // We can call instance methods ON the object, that's fine!
             properties[i].printDetails(); 
         }
     }
 
+    // 5. Delete Logic
     public static void deletePropertyProcess() {
         System.out.print("Enter Property ID to delete: ");
         String id = input.nextLine();
@@ -115,7 +140,7 @@ public class propertySystemInterface {
         boolean found = false;
         for (int i = 0; i < pCount; i++) {
             if (properties[i].getID().equalsIgnoreCase(id)) {
-                // Swap logic
+                // Swap with the last item
                 properties[i] = properties[pCount - 1];
                 properties[pCount - 1] = null; 
                 pCount--;
@@ -124,11 +149,12 @@ public class propertySystemInterface {
                 break;
             }
         }
-        if (!found) {
+        if (found == false) {
             System.out.println("Property ID not found.");
         }
     }
 
+    // 6. The User Input Process for Adding (Includes Floor Plan)
     public static void addNewPropertyProcess() {
         System.out.println("\n--- ADD NEW PROPERTY ---");
         System.out.print("Enter Property ID: ");
@@ -140,30 +166,62 @@ public class propertySystemInterface {
         System.out.print("Enter Location: ");
         String loc = input.nextLine();
         
-        System.out.print("Enter Price (RM): ");
-        double price = input.nextDouble();
-        input.nextLine(); 
+        // Safe Price Input
+        double price = 0;
+        while(true) {
+            System.out.print("Enter Price (RM): ");
+            if (input.hasNextDouble()) {
+                price = input.nextDouble();
+                input.nextLine(); 
+                break;
+            } else {
+                System.out.println("Error: Enter a valid number.");
+                input.next();
+            }
+        }
 
         // --- DRAW FLOOR PLAN ---
         System.out.println("\n--- DRAW FLOOR PLAN ---");
-        System.out.print("Enter ROWS: ");
-        int rows = input.nextInt();
-        System.out.print("Enter COLS: ");
-        int cols = input.nextInt();
-        input.nextLine(); 
+        
+        // Safe Rows Input
+        int rows = 0;
+        while(true) {
+            System.out.print("Enter ROWS: ");
+            if (input.hasNextInt()) { rows = input.nextInt(); break; }
+            else { System.out.println("Error: Enter a whole number."); input.next(); }
+        }
+
+        // Safe Cols Input
+        int cols = 0;
+        while(true) {
+            System.out.print("Enter COLUMNS: ");
+            if (input.hasNextInt()) { 
+                cols = input.nextInt(); 
+                input.nextLine(); 
+                break; 
+            }
+            else { 
+                System.out.println("Error: Enter a whole number."); 
+                input.next(); 
+            }
+        }
 
         String[][] floorPlan = new String[rows][cols];
         
         // Pre-fill
         for(int r=0; r<rows; r++) {
-            for(int c=0; c<cols; c++) floorPlan[r][c] = " ";
+            for(int c=0; c<cols; c++) {
+                floorPlan[r][c] = " ";
+            }
         }
 
-        System.out.println("Draw map (X to finish early). Legend: B=Bed, T=Toilet");
+        System.out.println("Draw map (Type 'X' to finish early). Legend: B=Bed, T=Toilet");
         for (int i = 0; i < rows; i++) {
             System.out.print("Row " + (i+1) + ": ");
             String line = input.nextLine();
-            if (line.equalsIgnoreCase("X")) break;
+            
+            if (line.equalsIgnoreCase("X")) 
+                break;
 
             for (int j = 0; j < cols; j++) {
                 if (j < line.length()) {
@@ -173,22 +231,21 @@ public class propertySystemInterface {
         }
 
         // Auto-Count Bed/Bath
-        int bed = 0, bath = 0;
+        int bed = 0;
+        int bath = 0;
         for(int r=0; r<rows; r++) {
             for(int c=0; c<cols; c++) {
                 if(floorPlan[r][c].equalsIgnoreCase("B")) bed++;
                 if(floorPlan[r][c].equalsIgnoreCase("T")) bath++;
             }
         }
-        System.out.println("Detected: " + bed + " Beds, " + bath + " Baths.");
+        System.out.println("Detected: " + bed + " Bedrooms & " + bath + " Bathrooms.");
 
-        // Create Object
-        Property newP = new Property(id, type, loc, price, "Available", bed, bath);
+        // Create Object & Save
+        Property newProperty = new Property(id, type, loc, price, "Available", bed, bath);
+        newProperty.setLayout(floorPlan); // Requires updated Property.java
         
-        // Save the map inside the object (This works now because you updated Property.java)
-        newP.setLayout(floorPlan); 
-        
-        addProperty(newP);
+        addProperty(newProperty);
         System.out.println("Property Added Successfully!");
     }
 }

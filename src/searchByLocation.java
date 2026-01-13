@@ -7,24 +7,38 @@
  *
  * @author user
  */
-public void searchByLocation(String keyword) {
+public class searchByLocation {
+    
+    public static void search(Property[] properties, int count, String searchInput) {
+        
+        System.out.println("\n--- SEARCH RESULTS FOR: \"" + searchInput + "\" ---");
+        
         boolean found = false;
-        System.out.println("\n--- Searching for Location: " + keyword + " ---");
+        int matchCount = 0;
 
-        // The loop runs from 0 up to 'count' (Ipan's variable)
-        for (int i = 0; i < count; i++) { 
+        // Loop through the existing properties
+        for (int i = 0; i < count; i++) {
             
-            // Comparison: 'location' is the variable Aqil defined
-            // 'keyword' is the value Muzam gets from the user
-            if (storage[i].location.equalsIgnoreCase(keyword)) { 
+            // 1. Get the location from the current property
+            String propertyLocation = properties[i].getLocation();
+            
+            // 2. Check match (Using toLowerCase so 'gombak' finds 'Gombak')
+            // We use .contains() so "Kuala" will find "Kuala Lumpur"
+            if (propertyLocation.toLowerCase().contains(searchInput.toLowerCase())) {
                 
-                // If matched, you call 'printDetails' (Aqil's method)
-                storage[i].printDetails(); 
+                // Print the match
+                System.out.print((matchCount + 1) + ". ");
+                properties[i].printDetails();
+                
                 found = true;
+                matchCount++;
             }
         }
-
-        if (!found) {
-            System.out.println("Result: No properties found in " + keyword);
+        
+        if (found == false) {
+            System.out.println("No properties found in that location.");
+        } else {
+            System.out.println("Total matches found: " + matchCount);
         }
     }
+}
