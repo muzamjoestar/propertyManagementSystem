@@ -50,6 +50,7 @@ public class Tenant {
         System.out.println("Monthly Income: " + monthlyIncome);
         System.out.println("Marital Status: " + maritalStatus);
         System.out.println("Nationality: " + nationality);
+        System.out.println("PropertyID: " + propertyID);
         System.out.println("---------------------------");
     }
     public String getTID() { return tenantID; }

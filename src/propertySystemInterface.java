@@ -31,7 +31,10 @@ public class propertySystemInterface {
             System.out.println("2. View Available Properties");
             System.out.println("3. Delete Existing Property");
             System.out.println("4. Search Properties by Location");
-            System.out.println("5. Exit");
+            System.out.println("5. Add New Tenant");
+            System.out.println("6. View Available Tenant");
+            System.out.println("7. Delete Existing Tenant");
+            System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
             
             if (input.hasNextInt()) {
